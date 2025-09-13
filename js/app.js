@@ -1,37 +1,19 @@
 
-async function getURI(uri) {
-    const response = fetch(`https://jsonplaceholder.typicode.com/${uri}`)
-        .then(response => response.json())
-    return response
+async function buscaCEP(cep) {
+    return await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())   
 }
 
-async function listarUsuarios() {
-    const data = await usuarios('/users')
-    data.forEach(item => {
-        criarElementoLi(item.name)
-    });
-}
+const cepInformado = document.querySelector('input')
+const buscarLogradouro = document.querySelector('button')
 
-async function listarFotografias() {
-    const data = await getURI('/photos')
-    data.forEach(item => {
-        criarImagem(item.thumbnailUrl)
-    });
-}
-
-function criarElementoLi(contexto) {
-    const elementLi = document.createElement('li')
-    elementLi.textContent = contexto
-    const listaNaoOrdenada = document.querySelector('ul')
-    listaNaoOrdenada.appendChild(elementLi)
-}
-
-function criarImagem(img) {
-    const elementLi = document.createElement('li')
-    elementLi.innerHTML = `<img src='${img}'/>`
-    const listaNaoOrdenada = document.querySelector('ul')
-    listaNaoOrdenada.appendChild(elementLi)
-}
-
-const button = document.querySelector('button')
-button.addEventListener('click', () => listarFotografias())
+buscarLogradouro.addEventListener('click', () => {
+    const viaCep = buscaCEP(64215730)
+    
+    viaCep.then(resultado => {
+        const elementLogradouro = document.querySelector('[data-logradouro]')
+        let html = `logradouro: ${resultado.logradouro}`
+            html += `<br/>bairro: ${resultado.bairro}`
+        elementLogradouro.innerHTML = html
+    }) 
+})
