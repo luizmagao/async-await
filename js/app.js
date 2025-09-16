@@ -1,19 +1,49 @@
+import axios from 'axios';
 
-async function buscaCEP(cep) {
-    return await fetch(`https://viacep.com.br/ws/${cep}/json/`)
-        .then(response => response.json())   
+axios.get('https://dattebayo-api.onrender.com/characters')
+  .then(function (response) {
+    // manipula a resposta da requisição
+    console.log(response);
+  })
+  .catch(function (error) {
+    // manipula os erros
+    console.log(error);
+  })
+
+const getAPI = () => {
+    const result = fetch('https://dattebayo-api.onrender.com/characters')
+                .then(response => response.json())
+    return result;
 }
 
-const cepInformado = document.querySelector('input')
-const buscarLogradouro = document.querySelector('button')
+const animes = getAPI()
+    .then(data => {
+        const characters = data.characters
 
-buscarLogradouro.addEventListener('click', () => {
-    const viaCep = buscaCEP(64215730)
-    
-    viaCep.then(resultado => {
-        const elementLogradouro = document.querySelector('[data-logradouro]')
-        let html = `logradouro: ${resultado.logradouro}`
-            html += `<br/>bairro: ${resultado.bairro}`
-        elementLogradouro.innerHTML = html
-    }) 
-})
+        characters.forEach(element => {
+
+            const container = document.querySelector('[data-container]')
+            const dataCard = document.createElement('div')
+            dataCard.dataset.card = ''
+            dataCard.classList.add('card')
+            dataCard.classList.add('m-2')
+
+            const title = document.createElement('div')
+            title.dataset.title = ''
+            title.innerText = element.name
+            dataCard.appendChild(title)
+
+            const imageDiv = document.createElement('div')
+            imageDiv.dataset.image = ''
+            
+            const image = document.createElement('img')
+            image.src = element.images[0] ?? null
+
+            imageDiv.appendChild(image)
+            dataCard.appendChild(imageDiv)
+            
+            container.appendChild(dataCard)
+            
+        });
+
+    })
