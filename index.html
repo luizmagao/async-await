@@ -5,11 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        .alerta-sumir {
+            display: none;
+        }
+    </style>
   </head>
   <body>
 
     <div class="container">
         <h1>Tarefas</h1>
+        <div class="alerta-sumir alert alert-danger" role="alert" id="alerta">
+            A simple primary alert—check it out!
+        </div>
         <div class="mb-3">
             <label for="tarefa" class="form-label">Adicione uma tarefa</label>
             <textarea class="form-control" id="tarefa" rows="3"></textarea>
